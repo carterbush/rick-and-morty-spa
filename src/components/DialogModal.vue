@@ -15,7 +15,7 @@ export default {
 <template>
   <Transition>
     <div class="dialog-wrapper" v-if="isOpen" @click="onModalClose()">
-      <div class="dialog">
+      <div class="dialog" @click.stop="">
         <div class="dialog-actions"><button @click="onModalClose()">X</button></div>
         <div class="dialog-content">
           <slot></slot>
