@@ -87,9 +87,9 @@ export default {
       <CharacterDetails :character="selectedCharacter!" />
     </DialogModal>
     <div class="pagination-controls">
-      <div @click="page > 1 && page--">Prev page</div>
+      <button @click="page > 1 && page--">Prev page</button>
       <div>Page {{ page }}</div>
-      <div @click="page < maxPages && page++">Next page</div>
+      <button @click="page < maxPages && page++">Next page</button>
     </div>
   </div>
 </template>
@@ -131,5 +131,11 @@ export default {
   display: flex;
   justify-content: space-evenly;
   padding: 8px;
+}
+
+.pagination-controls > button {
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 </style>
