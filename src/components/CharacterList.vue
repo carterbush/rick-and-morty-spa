@@ -17,10 +17,13 @@ export default {
   components: { CardItem, DialogModal, CharacterDetails },
   methods: {
     async searchForCharacters() {
+      // Create the filters object
       const filters = {
         ...(this.nameFilter && { name: this.nameFilter }),
         page: this.page
       }
+
+      // Request characters and store to state if successful
       const charactersResponse = await rma.getCharacters(filters)
       if (charactersResponse.status === 200) {
         this.characters = charactersResponse.data.results || []
@@ -35,6 +38,7 @@ export default {
       this.selectedCharacter = null
     },
     async selectCharacter(id: number) {
+      // Make a request for a specific character and store the result
       const characterResponse = await rma.getCharacter(id)
       if (characterResponse.status === 200) {
         this.selectedCharacter = characterResponse.data
@@ -50,6 +54,7 @@ export default {
   },
   watch: {
     nameFilter() {
+      // Reset current page when the name filter is changed
       this.page = 1
       this.searchForCharacters()
     },
