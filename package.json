@@ -12,6 +12,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "rickmortyapi": "^2.3.0",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0"
   },
