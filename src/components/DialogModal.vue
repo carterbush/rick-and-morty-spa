@@ -25,7 +25,7 @@ export default {
   </Transition>
 </template>
 
-<style>
+<style lang="scss">
 .dialog-wrapper {
   position: fixed;
   top: 0;
@@ -55,12 +55,13 @@ export default {
   padding: 0 8px;
   height: 32px;
   align-self: flex-end;
-}
 
-.dialog-actions > button {
-  cursor: pointer;
-  background-color: unset;
-  border: unset;
+  button {
+    cursor: pointer;
+    background-color: unset;
+    color: var(--color-text);
+    border: unset;
+  }
 }
 
 .dialog-content {
