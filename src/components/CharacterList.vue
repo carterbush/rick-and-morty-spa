@@ -1,8 +1,9 @@
 <script lang="ts">
-import CardItem from './CardItem.vue'
 import * as rma from 'rickmortyapi'
+import CardItem from './CardItem.vue'
 import DialogModal from './DialogModal.vue'
 import CharacterDetails from './CharacterDetails.vue'
+import debounce from '../utilities/debounce'
 
 export default {
   data() {
@@ -16,7 +17,26 @@ export default {
   },
   components: { CardItem, DialogModal, CharacterDetails },
   methods: {
-    async searchForCharacters() {
+    // This is debounced in created()
+    searchForCharacters() {},
+    handleModalClose() {
+      this.selectedCharacter = null
+    },
+    async selectCharacter(id: number) {
+      // Make a request for a specific character and store the result
+      const characterResponse = await rma.getCharacter(id)
+      if (characterResponse.status === 200) {
+        this.selectedCharacter = characterResponse.data
+      } else {
+        console.error(
+          `Oh no, an error fetching character with id = ${id}: ${characterResponse.statusMessage}`
+        )
+      }
+    }
+  },
+  created() {
+    // This doesn't seem like the best way of doing debouncing, but most resources seemed to suggest something similar.
+    this.searchForCharacters = debounce<void>(async () => {
       // Create the filters object
       const filters = {
         ...(this.nameFilter && { name: this.nameFilter }),
@@ -33,21 +53,7 @@ export default {
           `Oh no, an error fetching the characters: ${charactersResponse.statusMessage}`
         )
       }
-    },
-    handleModalClose() {
-      this.selectedCharacter = null
-    },
-    async selectCharacter(id: number) {
-      // Make a request for a specific character and store the result
-      const characterResponse = await rma.getCharacter(id)
-      if (characterResponse.status === 200) {
-        this.selectedCharacter = characterResponse.data
-      } else {
-        console.error(
-          `Oh no, an error fetching character with id = ${id}: ${characterResponse.statusMessage}`
-        )
-      }
-    }
+    })
   },
   async mounted() {
     this.searchForCharacters()
