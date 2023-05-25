@@ -23,7 +23,6 @@ header {
 
     font-size: 32px;
     font-family: 'Get Schwifty';
-    white-space: nowrap;
 
     text-align: center;
     text-shadow: 0 0 16px #fff765;
