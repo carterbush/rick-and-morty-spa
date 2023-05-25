@@ -145,5 +145,6 @@ export default {
   border: none;
   background: none;
   font-family: inherit;
+  color: var(--color-text);
 }
 </style>
