@@ -26,5 +26,7 @@ export default {
 
 .card-title {
   text-align: center;
+  background-color: var(--color-background-soft);
+  border-radius: 16px;
 }
 </style>

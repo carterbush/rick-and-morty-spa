@@ -42,7 +42,7 @@ export default {
 }
 
 .dialog {
-  background-color: white;
+  background-color: var(--color-background-soft);
   border-radius: 8px;
 
   display: flex;
