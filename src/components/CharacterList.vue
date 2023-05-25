@@ -132,6 +132,11 @@ export default {
 .pagination-controls {
   display: flex;
   justify-content: space-evenly;
+
+  color: var(--color-text);
+  background-color: var(--color-background-soft);
+
+  border-radius: 16px;
   padding: 8px;
 }
 
@@ -139,5 +144,6 @@ export default {
   cursor: pointer;
   border: none;
   background: none;
+  font-family: inherit;
 }
 </style>
