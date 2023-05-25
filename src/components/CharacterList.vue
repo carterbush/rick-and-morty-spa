@@ -10,7 +10,7 @@ export default {
     return {
       nameFilter: '',
       characters: [] as rma.Character[],
-      selectedCharacter: null as rma.Character | null,
+      selectedCharacterId: null as number | null,
       page: 1,
       maxPages: 1
     }
@@ -19,19 +19,11 @@ export default {
   methods: {
     // This is debounced in created()
     searchForCharacters() {},
-    handleModalClose() {
-      this.selectedCharacter = null
+    selectCharacter(id: number) {
+      this.selectedCharacterId = id
     },
-    async selectCharacter(id: number) {
-      // Make a request for a specific character and store the result
-      const characterResponse = await rma.getCharacter(id)
-      if (characterResponse.status === 200) {
-        this.selectedCharacter = characterResponse.data
-      } else {
-        console.error(
-          `Oh no, an error fetching character with id = ${id}: ${characterResponse.statusMessage}`
-        )
-      }
+    handleModalClose() {
+      this.selectedCharacterId = null
     }
   },
   created() {
@@ -89,8 +81,12 @@ export default {
         /></CardItem>
       </li>
     </ol>
-    <DialogModal @modal-close="handleModalClose()" :isOpen="selectedCharacter !== null">
-      <CharacterDetails :character="selectedCharacter!" />
+    <DialogModal
+      @modal-close="handleModalClose()"
+      :isOpen="selectedCharacterId !== null"
+      v-if="selectedCharacterId !== null"
+    >
+      <CharacterDetails :character-id="selectedCharacterId" />
     </DialogModal>
     <div class="pagination-controls">
       <button @click="page > 1 && page--">Prev page</button>

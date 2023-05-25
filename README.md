@@ -1,6 +1,6 @@
 ## Some of many things that have not been done:
 
-- 😱 Any loading states
+- ~~😱 Any loading states~~ Now there are some on the character modals
 - ⚠️ Error handling
 - ~~⚽ Request debouncing for the search bar~~
 - 🧪 UI/Unit testing

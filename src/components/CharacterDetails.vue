@@ -3,13 +3,14 @@ import * as rma from 'rickmortyapi'
 
 export default {
   props: {
-    character: {
-      type: Object as () => rma.Character,
+    characterId: {
+      type: Number,
       required: true
     }
   },
   data() {
     return {
+      character: null as rma.Character | null,
       episodes: [] as rma.Episode[],
       isEpisodeAccordionOpen: false,
       isLoading: false
@@ -22,18 +23,39 @@ export default {
   },
   async mounted() {
     this.isLoading = true
-    Promise.all(
-      this.character.episode.map((episode) =>
-        fetch(episode)
-          .then((r) => r.json())
-          .catch(() => {
-            console.error(`oh no something went wrong fetching ${episode}`)
-          })
-      )
-    ).then((episodes: rma.Episode[]) => {
-      this.isLoading = false
-      this.episodes = episodes
-    })
+    // Fetch character
+    rma
+      .getCharacter(this.characterId)
+      .then((characterResponse) => {
+        if (characterResponse.status === 200) {
+          this.character = characterResponse.data
+          return this.character
+        } else {
+          console.error(
+            `Oh no, an error fetching character with id = ${this.characterId}: ${characterResponse.statusMessage}`
+          )
+          throw new Error()
+        }
+      })
+      // Then fetch the character's episodes
+      .then((character) => {
+        return Promise.all(
+          character.episode.map((episode) =>
+            fetch(episode)
+              .then((r) => r.json())
+              .catch(() => {
+                console.error(`oh no something went wrong fetching ${episode}`)
+              })
+          )
+        )
+      })
+      .then((episodes: rma.Episode[]) => {
+        this.isLoading = false
+        this.episodes = episodes
+      })
+      .catch(() => {
+        // Error handling here. For now, just spin the loader forever I guess.
+      })
   }
 }
 </script>
@@ -41,7 +63,7 @@ export default {
 <template>
   <div>
     <div class="loading" v-if="isLoading">⌛</div>
-    <div v-else>
+    <div v-else-if="!isLoading && character">
       <div class="character-profile">
         <img :src="character.image" class="character-picture" />
         <table>
