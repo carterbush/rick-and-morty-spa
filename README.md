@@ -1,3 +1,16 @@
+## Things that have been done
+- Animation
+  - Character modal fades in
+  - Episode list expands / collapses
+  - Loading spinner when opening character modal (disable cache & throttle speed in browser dev tools to see it for longer)
+- Responsive design
+- API integration
+  - Pagination for characters
+  - Debounced character search
+  - Individual character retrieval
+  - Episode retrieval
+- Text respects device theme preferences
+
 ## Some of many things that have not been done:
 
 - ~~😱 Any loading states~~ Now there are some on the character modals (but not when changing pages or searching)
